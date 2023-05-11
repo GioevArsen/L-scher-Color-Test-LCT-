@@ -38,6 +38,7 @@
             this.buttonCard2_6 = new System.Windows.Forms.Button();
             this.buttonCard2_7 = new System.Windows.Forms.Button();
             this.buttonCard2_8 = new System.Windows.Forms.Button();
+            this.labelNote = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelStage2
@@ -114,12 +115,25 @@
             this.buttonCard2_8.TabIndex = 9;
             this.buttonCard2_8.UseVisualStyleBackColor = true;
             // 
+            // labelNote
+            // 
+            this.labelNote.AutoSize = true;
+            this.labelNote.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNote.ForeColor = System.Drawing.Color.Red;
+            this.labelNote.Location = new System.Drawing.Point(56, 512);
+            this.labelNote.Name = "labelNote";
+            this.labelNote.Size = new System.Drawing.Size(983, 21);
+            this.labelNote.TabIndex = 10;
+            this.labelNote.Text = "Примечание: уже выбранная карточка будет помечена крестиком и станет некликабельн" +
+    "а до следующей комбинации.";
+            // 
             // FormStage2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 561);
             this.ControlBox = false;
+            this.Controls.Add(this.labelNote);
             this.Controls.Add(this.buttonCard2_8);
             this.Controls.Add(this.buttonCard2_7);
             this.Controls.Add(this.buttonCard2_6);
@@ -132,8 +146,10 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormStage2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lüscher Color Test";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -148,5 +164,6 @@
         private System.Windows.Forms.Button buttonCard2_6;
         private System.Windows.Forms.Button buttonCard2_7;
         private System.Windows.Forms.Button buttonCard2_8;
+        private System.Windows.Forms.Label labelNote;
     }
 }
