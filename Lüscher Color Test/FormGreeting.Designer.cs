@@ -73,6 +73,7 @@
             this.Controls.Add(this.labelGreetingText);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormGreeting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lüscher Color Test";
             this.ResumeLayout(false);
 
