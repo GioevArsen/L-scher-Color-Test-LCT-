@@ -10,22 +10,11 @@ using System.Windows.Forms;
 
 namespace Lüscher_Color_Test
 {
-    public partial class FormGreeting : System.Windows.Forms.Form
+    public partial class FormStage2 : Form
     {
-
-        public FormGreeting()
+        public FormStage2()
         {
             InitializeComponent();
-        }
-
-        private void buttonStartLCT_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void FormGreeting_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

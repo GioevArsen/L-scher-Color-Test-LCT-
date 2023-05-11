@@ -49,12 +49,20 @@ namespace Lüscher_Color_Test
         {
             Stage1Level++;
             ButtonsColors();
+            if(Stage1Level > 32)
+            {
+                this.Close();
+            }
         }
 
         private void buttonCard2_Click(object sender, EventArgs e)
         {
             Stage1Level++;
             ButtonsColors();
+            if (Stage1Level > 32)
+            {
+                this.Close();
+            }
         }
     }
 }

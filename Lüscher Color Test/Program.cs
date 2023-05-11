@@ -18,6 +18,7 @@ namespace Lüscher_Color_Test
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormGreeting());
             Application.Run(new FormStage1());
+            Application.Run(new FormStage2());
         }
     }
 }
