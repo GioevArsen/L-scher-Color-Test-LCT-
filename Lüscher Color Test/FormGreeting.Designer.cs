@@ -55,7 +55,7 @@
             // buttonStartLCT
             // 
             this.buttonStartLCT.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonStartLCT.Location = new System.Drawing.Point(450, 465);
+            this.buttonStartLCT.Location = new System.Drawing.Point(450, 420);
             this.buttonStartLCT.Name = "buttonStartLCT";
             this.buttonStartLCT.Size = new System.Drawing.Size(300, 50);
             this.buttonStartLCT.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 561);
+            this.ClientSize = new System.Drawing.Size(1184, 511);
             this.ControlBox = false;
             this.Controls.Add(this.buttonStartLCT);
             this.Controls.Add(this.labelExplanations);
