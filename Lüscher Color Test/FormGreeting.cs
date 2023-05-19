@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Lüscher_Color_Test
 
         int Stage1Level = 1;
         int Stage2Level = 1;
+        int Stage2CardsLeft = 8;
 
         Label Stage1Header = new Label();
         Label Stage2Header = new Label();
@@ -46,7 +48,7 @@ namespace Lüscher_Color_Test
                     break;
                 }
             }
-            string[] words = s.Split(' ');
+            string[] words = s.Split();
             color1 = words[1];
             color2 = words[2];
 
@@ -68,7 +70,7 @@ namespace Lüscher_Color_Test
                     break;
                 }
             }
-            string[] words = s.Split(' ');
+            string[] words = s.Split();
             string[] colors = new string[words.Length];
             for (int i = 1; i < colors.Length; i++)
             {
@@ -168,6 +170,22 @@ namespace Lüscher_Color_Test
 
             ButtonsColorsStage2();
         }
+
+        private void Stage2ButtonsRegeneration()
+        {
+            Size Stage2Size = new Size(100, 150);
+                                                    //исправить, сократив эти 8 блоков во что-то поменьше!?
+            this.Controls.Add(ButtonCard2_1);
+            this.Controls.Add(ButtonCard2_2);
+            this.Controls.Add(ButtonCard2_3);
+            this.Controls.Add(ButtonCard2_4);
+            this.Controls.Add(ButtonCard2_5);
+            this.Controls.Add(ButtonCard2_6);
+            this.Controls.Add(ButtonCard2_7);
+            this.Controls.Add(ButtonCard2_8);
+
+            //ButtonsColorsStage2();
+        }
         
         
         public FormGreeting()
@@ -208,7 +226,19 @@ namespace Lüscher_Color_Test
 
         private void AnyButton_Click(object sender, EventArgs e)
         {
-            (sender as Button).Dispose();
+            this.Controls.Remove(sender as Button);
+            Stage2CardsLeft--;
+            if (Stage2CardsLeft == 0)
+            {
+                Stage2ButtonsRegeneration();
+                Stage2CardsLeft = 8;
+                Stage2Level++;
+                ButtonsColorsStage2();
+            }
+            if (Stage2Level > 4)
+            {
+                this.Close();
+            }
         }
 
         private void FormGreeting_Load(object sender, EventArgs e)
