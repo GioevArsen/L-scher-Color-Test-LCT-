@@ -1,6 +1,6 @@
 ﻿namespace Lüscher_Color_Test
 {
-    partial class FormGreeting
+    partial class FormTest
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGreeting));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTest));
             this.labelGreetingText = new System.Windows.Forms.Label();
             this.labelExplanations = new System.Windows.Forms.Label();
             this.buttonStartLCT = new System.Windows.Forms.Button();
@@ -63,7 +63,7 @@
             this.buttonStartLCT.UseVisualStyleBackColor = true;
             this.buttonStartLCT.Click += new System.EventHandler(this.buttonStartLCT_Click);
             // 
-            // FormGreeting
+            // FormTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,7 +73,7 @@
             this.Controls.Add(this.labelGreetingText);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "FormGreeting";
+            this.Name = "FormTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lüscher Color Test";
             this.Load += new System.EventHandler(this.FormGreeting_Load);

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Lüscher_Color_Test
 {
-    public partial class FormGreeting : System.Windows.Forms.Form
+    public partial class FormTest : System.Windows.Forms.Form
     {
 
         int Stage1Level = 1;
@@ -34,6 +34,19 @@ namespace Lüscher_Color_Test
         Button ButtonCard2_6 = new Button();
         Button ButtonCard2_7 = new Button();
         Button ButtonCard2_8 = new Button();
+        
+
+
+        private void IsTestRetry()
+        {
+            StreamReader srTestRetry = new StreamReader("TestRetryState.txt");
+            string s = srTestRetry.ReadToEnd();
+            if(s == "true")
+            {
+                Stage1();
+            }
+            srTestRetry.Close();
+        }
 
         private void ButtonsColorsStage1()
         {
@@ -188,7 +201,7 @@ namespace Lüscher_Color_Test
         }
         
         
-        public FormGreeting()
+        public FormTest()
         {
             InitializeComponent();
         }
@@ -230,20 +243,41 @@ namespace Lüscher_Color_Test
             Stage2CardsLeft--;
             if (Stage2CardsLeft == 0)
             {
-                Stage2ButtonsRegeneration();
-                Stage2CardsLeft = 8;
-                Stage2Level++;
-                ButtonsColorsStage2();
-            }
-            if (Stage2Level > 4)
-            {
-                this.Close();
+                if(Stage2Level < 4)
+                {
+                    Stage2ButtonsRegeneration();
+                    Stage2CardsLeft = 8;
+                    Stage2Level++;
+                    ButtonsColorsStage2();
+                }
+                else
+                {
+                    DialogResult EndTest = MessageBox.Show(" Тест завершен. После недолгой обработки Ваших ответов Вам будет представлен результат.\n" +
+                        "Если Вы где-то поспешили с выбором или случайно выбрали не ту карточку, " +
+                        "советуем Вам перепройти тест, так как это может влиять на конечный результат.\n\n" +
+                        "Вы уверены, что Вы готовы завершить тест?", "Тест завершен", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (EndTest == DialogResult.Yes)
+                    {
+                        StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
+                        srTestRetry.Write("false");
+                        srTestRetry.Close();
+                        this.Close();
+                    }
+                    else
+                    {
+                        StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
+                        srTestRetry.Write("true");
+                        srTestRetry.Close();
+                        Application.Restart();
+                    }
+                }
             }
         }
 
+
         private void FormGreeting_Load(object sender, EventArgs e)
         {
-
+            IsTestRetry();
         }
     }
 }
