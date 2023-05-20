@@ -34,16 +34,32 @@ namespace Lüscher_Color_Test
         Button ButtonCard2_6 = new Button();
         Button ButtonCard2_7 = new Button();
         Button ButtonCard2_8 = new Button();
-        
 
+        bool ClosedCorreclty = true;
 
         private void IsTestRetry()
         {
             StreamReader srTestRetry = new StreamReader("TestRetryState.txt");
             string s = srTestRetry.ReadToEnd();
-            if(s == "true")
+            /*StreamReader srClosedCorrectly = new StreamReader("ClosedCorrectly.txt");
+            string s2 = srClosedCorrectly.ReadToEnd();*/
+            if (s == "true")
             {
+                StreamWriter srClosedCorrectly = new StreamWriter("ClosedCorrectly.txt", false);
+                srClosedCorrectly.Write("false");
+                srClosedCorrectly.Close();
                 Stage1();
+            }
+            srTestRetry.Close();
+        }
+
+        private void IsClosedCorrectly()
+        {
+            StreamReader srTestRetry = new StreamReader("ClosedCorrectly.txt", false);
+            string s = srTestRetry.ReadToEnd();
+            if(s == "false")
+            {
+                ClosedCorreclty = false;
             }
             srTestRetry.Close();
         }
@@ -275,9 +291,16 @@ namespace Lüscher_Color_Test
         }
 
 
-        private void FormGreeting_Load(object sender, EventArgs e)
+        private void FormTest_Load(object sender, EventArgs e)
         {
-            IsTestRetry();
+            IsClosedCorrectly();
+            if (ClosedCorreclty == false)
+            {
+                IsTestRetry();
+                StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
+                srTestRetry.Write("false");
+                srTestRetry.Close();
+            }
         }
     }
 }

@@ -76,7 +76,7 @@
             this.Name = "FormTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lüscher Color Test";
-            this.Load += new System.EventHandler(this.FormGreeting_Load);
+            this.Load += new System.EventHandler(this.FormTest_Load);
             this.ResumeLayout(false);
 
         }
