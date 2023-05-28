@@ -39,6 +39,10 @@ namespace Lüscher_Color_Test
 
         Label loadingTEXT = new Label();
 
+        Timer loadingTIMER = new Timer() { Enabled = true };
+
+        Random rnd = new Random();
+
         bool ClosedCorreclty = true;
 
         private void IsTestRetry()
@@ -238,6 +242,15 @@ namespace Lüscher_Color_Test
             loadingIMAGE.SizeMode = PictureBoxSizeMode.CenterImage;
             loadingIMAGE.Image = Lüscher_Color_Test.Properties.Resources.loadingIMAGE;
             this.Controls.Add(loadingIMAGE);
+
+            loadingTIMER.Interval = rnd.Next(3, 6) * 1000;
+            loadingTIMER.Tick += new EventHandler(timer_tick);
+        }
+
+        void timer_tick(object sender, EventArgs e)
+        {
+            (sender as Timer).Enabled = false;
+            this.Close();
         }
         
         public FormTest()
