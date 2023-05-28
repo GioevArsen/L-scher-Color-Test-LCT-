@@ -139,7 +139,7 @@ namespace Lüscher_Color_Test
             this.Controls.Add(ButtonCard1_1);
 
             ButtonCard1_2.Size = Stage1Size;
-            ButtonCard1_2.Location = new Point(650, 150);
+            ButtonCard1_2.Location = new Point(675, 150);
             ButtonCard1_2.Click += new EventHandler(ButtonCard1_2_Click);
             this.Controls.Add(ButtonCard1_2);
 
