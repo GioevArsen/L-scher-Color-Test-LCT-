@@ -35,6 +35,10 @@ namespace Lüscher_Color_Test
         Button ButtonCard2_7 = new Button();
         Button ButtonCard2_8 = new Button();
 
+        PictureBox loadingIMAGE = new PictureBox();
+
+        Label loadingTEXT = new Label();
+
         bool ClosedCorreclty = true;
 
         private void IsTestRetry()
@@ -216,6 +220,25 @@ namespace Lüscher_Color_Test
             //ButtonsColorsStage2();
         }
         
+        private void LoadingScreen()
+        {
+            this.Controls.Clear();
+            
+            this.BackColor = Color.White;
+
+            loadingTEXT.Text = "Подготовка результатов";
+            loadingTEXT.TextAlign = ContentAlignment.MiddleCenter;
+            loadingTEXT.Size = new Size(250, 50);
+            loadingTEXT.Location = new Point(475, 175);
+            loadingTEXT.Font = new Font("Times New Roman", 13, FontStyle.Bold);
+            this.Controls.Add(loadingTEXT);
+
+            loadingIMAGE.Location = new Point(550, 225);
+            loadingIMAGE.Size = new Size(75, 75);
+            loadingIMAGE.SizeMode = PictureBoxSizeMode.CenterImage;
+            loadingIMAGE.Image = Lüscher_Color_Test.Properties.Resources.loadingIMAGE;
+            this.Controls.Add(loadingIMAGE);
+        }
         
         public FormTest()
         {
@@ -233,9 +256,7 @@ namespace Lüscher_Color_Test
             ButtonsColorsStage1();
             if (Stage1Level > 32)
             {
-                ButtonCard1_1.Dispose();
-                ButtonCard1_2.Dispose();
-                Stage1Header.Dispose();
+                this.Controls.Clear();
                 Stage2();
             }
         }
@@ -246,9 +267,7 @@ namespace Lüscher_Color_Test
             ButtonsColorsStage1();
             if (Stage1Level > 32)
             {
-                ButtonCard1_1.Dispose();
-                ButtonCard1_2.Dispose();
-                Stage1Header.Dispose();
+                this.Controls.Clear();
                 Stage2();
             }
         }
@@ -278,7 +297,7 @@ namespace Lüscher_Color_Test
                         StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
                         srTestRetry.Write("false");
                         srTestRetry.Close();
-                        //this.Close();
+                        LoadingScreen();
                     }
                     else
                     {
