@@ -272,12 +272,13 @@ namespace Lüscher_Color_Test
                         "Если Вы где-то поспешили с выбором или случайно выбрали не ту карточку, " +
                         "советуем Вам перепройти тест, так как это может влиять на конечный результат.\n\n" +
                         "Вы уверены, что Вы готовы завершить тест?", "Тест завершен", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                     if (EndTest == DialogResult.Yes)
                     {
                         StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
                         srTestRetry.Write("false");
                         srTestRetry.Close();
-                        this.Close();
+                        //this.Close();
                     }
                     else
                     {

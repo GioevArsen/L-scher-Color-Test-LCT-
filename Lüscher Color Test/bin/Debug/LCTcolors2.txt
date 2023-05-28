@@ -1,0 +1,4 @@
+1 Lime Black Blue Yellow Purple White Red Gray
+2 Aqua Fuchsia Green Silver Olive Navy Teal Maroon
+3 Silver Olive White Teal Black Green Maroon Gray 
+4 Yellow Aqua Fuchsia Red Lime Blue Purple Navy
