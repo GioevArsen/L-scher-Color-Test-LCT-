@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace Lüscher_Color_Test
 {
@@ -42,6 +44,21 @@ namespace Lüscher_Color_Test
         Timer loadingTIMER = new Timer() { Enabled = true };
 
         Random rnd = new Random();
+
+        List<Color> COLORS = new List<Color>();
+
+        string[] colorsSTAGE1;
+
+        int BRIGHTcounter = 0;
+        int DIMcounter = 0;
+        int BLACKcounter = 0;
+        int GRAYcounter = 0;
+        int BROWNcounter = 0;
+        int BLUEcounter = 0;
+        int GREENcounter = 0;
+        int REDcounter = 0;
+        int PURPLEcounter = 0;
+        int YELLOWcounter = 0;
 
         bool ClosedCorreclty = true;
 
@@ -76,7 +93,6 @@ namespace Lüscher_Color_Test
         {
             StreamReader sr = new StreamReader("LCTcolors1.txt");
             string s = "";
-            string color1, color2;
             while (!sr.EndOfStream)
             {
                 s = sr.ReadLine();
@@ -86,11 +102,12 @@ namespace Lüscher_Color_Test
                 }
             }
             string[] words = s.Split();
-            color1 = words[1];
-            color2 = words[2];
+            colorsSTAGE1 = new string[words.Length];
+            colorsSTAGE1[0] = words[1];
+            colorsSTAGE1[1] = words[2];
 
-            ButtonCard1_1.BackColor = Color.FromName(color1);
-            ButtonCard1_2.BackColor = Color.FromName(color2);
+            ButtonCard1_1.BackColor = Color.FromName(colorsSTAGE1[0]);
+            ButtonCard1_2.BackColor = Color.FromName(colorsSTAGE1[1]);
 
             sr.Close();
         }
@@ -250,7 +267,79 @@ namespace Lüscher_Color_Test
         void timer_tick(object sender, EventArgs e)
         {
             (sender as Timer).Enabled = false;
+
+            StreamWriter fwr = new StreamWriter("TEST123");
+            for(int i = 0; i < COLORS.Count; i++)
+            {
+                fwr.Write(COLORS[i] + " ");
+            }
+            fwr.Close();
+            ResultsStage();
             this.Close();
+        }
+
+
+        public void ResultsStage() //исправить во что-то пограмотнее!!
+        {
+            List<Color> BRIGHTcolors = new List<Color>() { Color.White, Color.Silver, Color.Red, Color.Blue, Color.Fuchsia, Color.Lime, Color.Yellow, Color.Aqua };
+            List<Color> DIMcolors = new List<Color>() { Color.Black, Color.Gray, Color.Maroon, Color.Navy, Color.Purple, Color.Green, Color.Olive, Color.Teal };
+
+            List<Color> BLACKcolors = new List<Color>() { Color.White, Color.Black };
+            List<Color> GRAYcolors = new List<Color>() { Color.Silver, Color.Gray };
+            List<Color> BROWNcolors = new List<Color>() { Color.Teal, Color.Olive };
+            List<Color> BLUEcolors = new List<Color>() { Color.Blue, Color.Navy };
+            List<Color> GREENcolors = new List<Color>() { Color.Lime, Color.Green };
+            List<Color> REDcolors = new List<Color>() { Color.Red, Color.Maroon };
+            List<Color> PURPLEcolors = new List<Color>() { Color.Fuchsia, Color.Purple };
+            List<Color> YELLOWcolors = new List<Color>() {Color.Yellow, Color.Aqua };
+
+
+            for (int i = 0; i < COLORS.Count; i++)
+            {
+                if (BRIGHTcolors.Contains(COLORS[i]))
+                {
+                    BRIGHTcounter++;
+                }
+                if (DIMcolors.Contains(COLORS[i]))
+                {
+                    DIMcounter++;
+                }
+
+                if (BLACKcolors.Contains(COLORS[i]))
+                {
+                    BLACKcounter++;
+                }
+                if (GRAYcolors.Contains(COLORS[i]))
+                {
+                    GRAYcounter++;
+                }
+                if (BROWNcolors.Contains(COLORS[i]))
+                {
+                    BROWNcounter++;
+                }
+                if (BLUEcolors.Contains(COLORS[i]))
+                {
+                    BLUEcounter++;
+                }
+                if (GREENcolors.Contains(COLORS[i]))
+                {
+                    GREENcounter++;
+                }
+                if (REDcolors.Contains(COLORS[i]))
+                {
+                    REDcounter++;
+                }
+                if (PURPLEcolors.Contains(COLORS[i]))
+                {
+                    PURPLEcounter++;
+                }
+                if (YELLOWcolors.Contains(COLORS[i]))
+                {
+                    YELLOWcounter++;
+                }
+            }
+
+            //MessageBox.Show(BLACKcounter + " " + GRAYcounter + " " + BROWNcounter + " " + BLUEcounter + " " + GREENcounter + " " + REDcounter + " " + PURPLEcounter + " " + YELLOWcounter);
         }
         
         public FormTest()
@@ -265,6 +354,7 @@ namespace Lüscher_Color_Test
 
         private void ButtonCard1_1_Click(object sender, EventArgs e)
         {
+            COLORS.Add(ButtonCard1_1.BackColor);
             Stage1Level++;
             ButtonsColorsStage1();
             if (Stage1Level > 32)
@@ -276,6 +366,7 @@ namespace Lüscher_Color_Test
 
         private void ButtonCard1_2_Click(object sender, EventArgs e)
         {
+            COLORS.Add(ButtonCard1_2.BackColor);
             Stage1Level++;
             ButtonsColorsStage1();
             if (Stage1Level > 32)
@@ -288,6 +379,7 @@ namespace Lüscher_Color_Test
         private void AnyButton_Click(object sender, EventArgs e)
         {
             this.Controls.Remove(sender as Button);
+            COLORS.Add((sender as Button).BackColor);
             Stage2CardsLeft--;
             if (Stage2CardsLeft == 0)
             {

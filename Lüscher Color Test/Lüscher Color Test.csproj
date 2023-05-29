@@ -88,5 +88,6 @@
     <None Include="bin\Debug\loadingIMAGE.gif" />
     <Content Include="LCTlogo.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
