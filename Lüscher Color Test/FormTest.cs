@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -45,22 +46,36 @@ namespace Lüscher_Color_Test
 
         Random rnd = new Random();
 
-        List<Color> COLORS = new List<Color>();
+        List<string> COLORS = new List<string>();
 
         string[] colorsSTAGE1;
 
-        int BRIGHTcounter = 0;
-        int DIMcounter = 0;
-        int BLACKcounter = 0;
-        int GRAYcounter = 0;
-        int BROWNcounter = 0;
-        int BLUEcounter = 0;
-        int GREENcounter = 0;
-        int REDcounter = 0;
-        int PURPLEcounter = 0;
-        int YELLOWcounter = 0;
+        //for ResultStage
+        string[] tonesNames = { "Bright", "Dim" };
+        string[] counterNames = { "Black", "Gray", "Brown", "Blue", "Green", "Red", "Purple", "Yellow" };
+        int[] colorCounters = new int[8];
+        int[] toneCounters = new int[2];
+
+        //for ResultsStage
+        string[] BRIGHTcolors;
+        string[] DIMcolors;
+        string[] BLACKcolors;
+        string[] GRAYcolors;
+        string[] BROWNcolors;
+        string[] BLUEcolors;
+        string[] GREENcolors;
+        string[] REDcolors;
+        string[] PURPLEcolors;
+        string[] YELLOWcolors;
 
         bool ClosedCorreclty = true;
+
+
+        /// <summary>
+        /// //////////////////////////////////////////////////////////////////////////
+        /// </summary>
+
+
 
         private void IsTestRetry()
         {
@@ -80,7 +95,7 @@ namespace Lüscher_Color_Test
         {
             StreamReader srTestRetry = new StreamReader("TextFiles\\ClosedCorrectly.txt", false);
             string s = srTestRetry.ReadToEnd();
-            if(s == "false")
+            if (s == "false")
             {
                 ClosedCorreclty = false;
             }
@@ -152,7 +167,7 @@ namespace Lüscher_Color_Test
             Stage1Header.Size = new Size(720, 40);
             Stage1Header.Location = new Point(240, 55);
             Stage1Header.Text = "Этап 1. Выберите наиболее привлекательный Вам цвет.";
-            Stage1Header.TextAlign = ContentAlignment.MiddleCenter; 
+            Stage1Header.TextAlign = ContentAlignment.MiddleCenter;
             Stage1Header.Font = new Font("Times New Roman", 20, FontStyle.Bold);
             this.Controls.Add(Stage1Header);
 
@@ -226,7 +241,7 @@ namespace Lüscher_Color_Test
         private void Stage2ButtonsRegeneration()
         {
             Size Stage2Size = new Size(100, 150);
-                                                    //исправить, сократив эти 8 блоков во что-то поменьше!?
+            //исправить, сократив эти 8 блоков во что-то поменьше!?
             this.Controls.Add(ButtonCard2_1);
             this.Controls.Add(ButtonCard2_2);
             this.Controls.Add(ButtonCard2_3);
@@ -238,11 +253,11 @@ namespace Lüscher_Color_Test
 
             //ButtonsColorsStage2();
         }
-        
+
         private void LoadingScreen()
         {
             this.Controls.Clear();
-            
+
             this.BackColor = Color.White;
 
             loadingTEXT.Text = "Подготовка результатов";
@@ -258,7 +273,7 @@ namespace Lüscher_Color_Test
             loadingIMAGE.Image = Lüscher_Color_Test.Properties.Resources.loadingIMAGE;
             this.Controls.Add(loadingIMAGE);
 
-            loadingTIMER.Interval = rnd.Next(3, 6) * 1000;
+            loadingTIMER.Interval = rnd.Next(3, 11) * 1000;
             loadingTIMER.Tick += new EventHandler(timer_tick);
         }
 
@@ -267,7 +282,7 @@ namespace Lüscher_Color_Test
             (sender as Timer).Enabled = false;
 
             StreamWriter fwr = new StreamWriter("TEST123");
-            for(int i = 0; i < COLORS.Count; i++)
+            for (int i = 0; i < COLORS.Count; i++)
             {
                 fwr.Write(COLORS[i] + " ");
             }
@@ -276,87 +291,213 @@ namespace Lüscher_Color_Test
             this.Close();
         }
 
+        private string ColorToString(string x)
+        {
+            char[] chars = { '[', ']' };
+            string[] ss = x.Split();
+            string result = ss[1].Trim(chars);
+            return result;
+        }
+
 
         public void ResultsStage() //исправить во что-то пограмотнее!!
         {
-            List<Color> BRIGHTcolors = new List<Color>() { Color.White, Color.Silver, Color.Red, Color.Blue, Color.Fuchsia, Color.Lime, Color.Yellow, Color.Aqua };
-            List<Color> DIMcolors = new List<Color>() { Color.Black, Color.Gray, Color.Maroon, Color.Navy, Color.Purple, Color.Green, Color.Olive, Color.Teal };
+            StreamReader resSTR = new StreamReader("TextFiles\\ResultColorGroups.txt");
+            string s = "";
+            while (!resSTR.EndOfStream)
+            {
+                s = resSTR.ReadLine();
 
-            List<Color> BLACKcolors = new List<Color>() { Color.White, Color.Black };
-            List<Color> GRAYcolors = new List<Color>() { Color.Silver, Color.Gray };
-            List<Color> BROWNcolors = new List<Color>() { Color.Teal, Color.Olive };
-            List<Color> BLUEcolors = new List<Color>() { Color.Blue, Color.Navy };
-            List<Color> GREENcolors = new List<Color>() { Color.Lime, Color.Green };
-            List<Color> REDcolors = new List<Color>() { Color.Red, Color.Maroon };
-            List<Color> PURPLEcolors = new List<Color>() { Color.Fuchsia, Color.Purple };
-            List<Color> YELLOWcolors = new List<Color>() {Color.Yellow, Color.Aqua };
+                if (s.Contains("BRIGHT"))
+                {
+                    BRIGHTcolors = s.Split();
+                }
+                if (s.Contains("DIM"))
+                {
+                    DIMcolors = s.Split();
+                }
+                if (s.Contains("0"))
+                {
+                    BLACKcolors = s.Split();
+                }
+                if (s.Contains("1"))
+                {
+                    GRAYcolors = s.Split();
+                }
+                if (s.Contains("2"))
+                {
+                    BROWNcolors = s.Split();
+                }
+                if (s.Contains("3"))
+                {
+                    BLUEcolors = s.Split();
+                }
+                if (s.Contains("4"))
+                {
+                    GREENcolors = s.Split();
+                }
+                if (s.Contains("5"))
+                {
+                    REDcolors = s.Split();
+                }
+                if (s.Contains("6"))
+                {
+                    PURPLEcolors = s.Split();
+                }
+                if (s.Contains("7"))
+                {
+                    YELLOWcolors = s.Split();
+                }
+            }
 
-            int[] counters = { BLACKcounter, GRAYcounter, BRIGHTcounter, BLACKcounter, GRAYcounter, REDcounter, PURPLEcounter, YELLOWcounter};
+            resSTR.Close();
+
+            ///////////////////////////////////////////////////////////////////////
+
+            int temp = 8;
 
             for (int i = 0; i < COLORS.Count; i++)
             {
+                if(temp == 0)
+                {
+                    temp = 8;
+                }
+
                 if (BRIGHTcolors.Contains(COLORS[i]))
                 {
-                    BRIGHTcounter++;
+                    toneCounters[0]++;
                 }
                 if (DIMcolors.Contains(COLORS[i]))
                 {
-                    DIMcounter++;
+                    toneCounters[1]++;
                 }
-                ///////////////////////////////////////////////
-
                 if (BLACKcolors.Contains(COLORS[i]))
                 {
-                    BLACKcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[0]++;
+                    }
+                    else
+                    {
+                        colorCounters[0] += temp;
+                        temp--;
+                    }
                 }
                 if (GRAYcolors.Contains(COLORS[i]))
                 {
-                    GRAYcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[1]++;
+                    }
+                    else
+                    {
+                        colorCounters[1] += temp;
+                        temp--;
+                    }
                 }
                 if (BROWNcolors.Contains(COLORS[i]))
                 {
-                    BROWNcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[2]++;
+                    }
+                    else
+                    {
+                        colorCounters[2] += temp;
+                        temp--;
+                    }
                 }
                 if (BLUEcolors.Contains(COLORS[i]))
                 {
-                    BLUEcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[3]++;
+                    }
+                    else
+                    {
+                        colorCounters[3] += temp;
+                        temp--;
+                    }
                 }
                 if (GREENcolors.Contains(COLORS[i]))
                 {
-                    GREENcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[4]++;
+                    }
+                    else
+                    {
+                        colorCounters[4] += temp;
+                        temp--;
+                    }
                 }
                 if (REDcolors.Contains(COLORS[i]))
                 {
-                    REDcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[5]++;
+                    }
+                    else
+                    {
+                        colorCounters[5] += temp;
+                        temp--;
+                    }
                 }
                 if (PURPLEcolors.Contains(COLORS[i]))
                 {
-                    PURPLEcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[6]++;
+                    }
+                    else
+                    {
+                        colorCounters[6] += temp;
+                        temp--;
+                    }
                 }
                 if (YELLOWcolors.Contains(COLORS[i]))
                 {
-                    YELLOWcounter++;
+                    if (i < 32)
+                    {
+                        colorCounters[7]++;
+                    }
+                    else
+                    {
+                        colorCounters[7] += temp;
+                        temp--;
+                    }
                 }
             }
 
-            int maxINDEX1 = 0;
-            int maxINDEX2 = 0;
-            for (int i = 1; i < COLORS.Count; i++)
+            /////////////////////////////////////////////////////////////////////////
+
+            int maxColorIndex1 = 0;
+            int maxColorIndex2 = 0;
+            int maxToneIndex = 0;
+            if (toneCounters[1] > toneCounters[0])
             {
-                if (counters[i] > counters[i - 1])
+                maxToneIndex = 1;
+            }
+            for (int i = 1; i < colorCounters.Length; i++)
+            {
+                if (colorCounters[i] >= colorCounters[i - 1])
                 {
-                    maxINDEX1 = i;
+                    maxColorIndex1 = i;
                 }
             }
-            for (int i = 1; i < COLORS.Count; i++)
+            for (int i = 1; i < colorCounters.Length; i++)
             {
-                if (counters[i] > counters[i - 1] && i != maxINDEX1)
+                if (colorCounters[i] >= colorCounters[i - 1] && i != maxColorIndex1)
                 {
-                    maxINDEX2 = i;
+                    maxColorIndex2 = i;
                 }
             }
-            //MessageBox.Show(BLACKcounter + " " + GRAYcounter + " " + BROWNcounter + " " + BLUEcounter + " " + GREENcounter + " " + REDcounter + " " + PURPLEcounter + " " + YELLOWcounter);
-            //MessageBox.Show(counters[maxINDEX1] + " " + COLORS[maxINDEX1] + "\n" + counters[maxINDEX2] + " " + COLORS[maxINDEX2]);
+
+
+            string FAVOURITEcolor_1 = counterNames[maxColorIndex1];
+            string FAVOURITEcolor_2 = counterNames[maxColorIndex2];
+            string FAVOURITEtone = tonesNames[maxToneIndex];
+            MessageBox.Show(FAVOURITEcolor_1 + " " + FAVOURITEcolor_2 + " " + FAVOURITEtone);
         }
         
         public FormTest()
@@ -371,7 +512,7 @@ namespace Lüscher_Color_Test
 
         private void ButtonCard1_1_Click(object sender, EventArgs e)
         {
-            COLORS.Add(ButtonCard1_1.BackColor);
+            COLORS.Add(colorsSTAGE1[0]);
             Stage1Level++;
             ButtonsColorsStage1();
             if (Stage1Level > 32)
@@ -383,7 +524,7 @@ namespace Lüscher_Color_Test
 
         private void ButtonCard1_2_Click(object sender, EventArgs e)
         {
-            COLORS.Add(ButtonCard1_2.BackColor);
+            COLORS.Add(colorsSTAGE1[1]);
             Stage1Level++;
             ButtonsColorsStage1();
             if (Stage1Level > 32)
@@ -396,7 +537,7 @@ namespace Lüscher_Color_Test
         private void AnyButton_Click(object sender, EventArgs e)
         {
             this.Controls.Remove(sender as Button);
-            COLORS.Add((sender as Button).BackColor);
+            COLORS.Add(ColorToString((sender as Button).BackColor.ToString()));
             Stage2CardsLeft--;
             if (Stage2CardsLeft == 0)
             {

@@ -1,0 +1,10 @@
+﻿BRIGHT White Silver Red Blue Fuchsia Lime Yellow Aqua
+DIM Black Gray Maroon Navy Purple Green Olive Teal
+0 White Black
+1 Silver Gray
+2 Olive Teal
+3 Blue Navy Aqua
+4 Lime Green
+5 Red Maroon
+6 Fuchsia Purple
+7 Yellow
