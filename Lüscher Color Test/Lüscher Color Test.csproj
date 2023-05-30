@@ -85,7 +85,28 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\LCTcolors1.txt" />
+    <Content Include="TextFiles\ClosedCorrectly.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TextFiles\LCTcolors1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TextFiles\LCTcolors2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TextFiles\LCTexplanations.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TextFiles\TestRetryState.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="bin\Debug\loadingIMAGE.gif" />
+    <None Include="bin\Debug\LCTexplanations.txt" />
+    <None Include="bin\Debug\LCTcolors1.txt" />
+    <None Include="bin\Debug\LCTcolors2.txt" />
+    <None Include="bin\Debug\ClosedCorrectly.txt" />
+    <None Include="bin\Debug\TestRetryState.txt" />
     <Content Include="LCTlogo.ico" />
   </ItemGroup>
   <ItemGroup />

@@ -64,13 +64,11 @@ namespace Lüscher_Color_Test
 
         private void IsTestRetry()
         {
-            StreamReader srTestRetry = new StreamReader("TestRetryState.txt");
+            StreamReader srTestRetry = new StreamReader("TextFiles\\TestRetryState.txt");
             string s = srTestRetry.ReadToEnd();
-            /*StreamReader srClosedCorrectly = new StreamReader("ClosedCorrectly.txt");
-            string s2 = srClosedCorrectly.ReadToEnd();*/
             if (s == "true")
             {
-                StreamWriter srClosedCorrectly = new StreamWriter("ClosedCorrectly.txt", false);
+                StreamWriter srClosedCorrectly = new StreamWriter("TextFiles\\ClosedCorrectly.txt", false);
                 srClosedCorrectly.Write("false");
                 srClosedCorrectly.Close();
                 Stage1();
@@ -80,7 +78,7 @@ namespace Lüscher_Color_Test
 
         private void IsClosedCorrectly()
         {
-            StreamReader srTestRetry = new StreamReader("ClosedCorrectly.txt", false);
+            StreamReader srTestRetry = new StreamReader("TextFiles\\ClosedCorrectly.txt", false);
             string s = srTestRetry.ReadToEnd();
             if(s == "false")
             {
@@ -91,7 +89,7 @@ namespace Lüscher_Color_Test
 
         private void ButtonsColorsStage1()
         {
-            StreamReader sr = new StreamReader("LCTcolors1.txt");
+            StreamReader sr = new StreamReader("TextFiles\\LCTcolors1.txt");
             string s = "";
             while (!sr.EndOfStream)
             {
@@ -114,7 +112,7 @@ namespace Lüscher_Color_Test
 
         private void ButtonsColorsStage2()
         {
-            StreamReader sr = new StreamReader("LCTcolors2.txt");
+            StreamReader sr = new StreamReader("TextFiles\\LCTcolors2.txt");
             string s = "";
             while (!sr.EndOfStream)
             {
@@ -293,6 +291,7 @@ namespace Lüscher_Color_Test
             List<Color> PURPLEcolors = new List<Color>() { Color.Fuchsia, Color.Purple };
             List<Color> YELLOWcolors = new List<Color>() {Color.Yellow, Color.Aqua };
 
+            int[] counters = { BLACKcounter, GRAYcounter, BRIGHTcounter, BLACKcounter, GRAYcounter, REDcounter, PURPLEcounter, YELLOWcounter};
 
             for (int i = 0; i < COLORS.Count; i++)
             {
@@ -304,6 +303,7 @@ namespace Lüscher_Color_Test
                 {
                     DIMcounter++;
                 }
+                ///////////////////////////////////////////////
 
                 if (BLACKcolors.Contains(COLORS[i]))
                 {
@@ -339,7 +339,24 @@ namespace Lüscher_Color_Test
                 }
             }
 
+            int maxINDEX1 = 0;
+            int maxINDEX2 = 0;
+            for (int i = 1; i < COLORS.Count; i++)
+            {
+                if (counters[i] > counters[i - 1])
+                {
+                    maxINDEX1 = i;
+                }
+            }
+            for (int i = 1; i < COLORS.Count; i++)
+            {
+                if (counters[i] > counters[i - 1] && i != maxINDEX1)
+                {
+                    maxINDEX2 = i;
+                }
+            }
             //MessageBox.Show(BLACKcounter + " " + GRAYcounter + " " + BROWNcounter + " " + BLUEcounter + " " + GREENcounter + " " + REDcounter + " " + PURPLEcounter + " " + YELLOWcounter);
+            //MessageBox.Show(counters[maxINDEX1] + " " + COLORS[maxINDEX1] + "\n" + counters[maxINDEX2] + " " + COLORS[maxINDEX2]);
         }
         
         public FormTest()
@@ -399,14 +416,14 @@ namespace Lüscher_Color_Test
 
                     if (EndTest == DialogResult.Yes)
                     {
-                        StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
+                        StreamWriter srTestRetry = new StreamWriter("TextFiles\\TestRetryState.txt", false);
                         srTestRetry.Write("false");
                         srTestRetry.Close();
                         LoadingScreen();
                     }
                     else
                     {
-                        StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
+                        StreamWriter srTestRetry = new StreamWriter("TextFiles\\TestRetryState.txt", false);
                         srTestRetry.Write("true");
                         srTestRetry.Close();
                         Application.Restart();
@@ -422,7 +439,7 @@ namespace Lüscher_Color_Test
             if (ClosedCorreclty == false)
             {
                 IsTestRetry();
-                StreamWriter srTestRetry = new StreamWriter("TestRetryState.txt", false);
+                StreamWriter srTestRetry = new StreamWriter("TextFiles\\TestRetryState.txt", false);
                 srTestRetry.Write("false");
                 srTestRetry.Close();
             }
