@@ -68,6 +68,10 @@ namespace Lüscher_Color_Test
         string[] PURPLEcolors;
         string[] YELLOWcolors;
 
+        string FAVOURITEcolor_1;
+        string FAVOURITEcolor_2;
+        string FAVOURITEtone;
+
         bool ClosedCorreclty = true;
 
 
@@ -273,7 +277,7 @@ namespace Lüscher_Color_Test
             loadingIMAGE.Image = Lüscher_Color_Test.Properties.Resources.loadingIMAGE;
             this.Controls.Add(loadingIMAGE);
 
-            loadingTIMER.Interval = rnd.Next(3, 11) * 1000;
+            loadingTIMER.Interval = rnd.Next(3, 9) * 1000;
             loadingTIMER.Tick += new EventHandler(timer_tick);
         }
 
@@ -288,7 +292,6 @@ namespace Lüscher_Color_Test
             }
             fwr.Close();
             ResultsStage();
-            this.Close();
         }
 
         private string ColorToString(string x)
@@ -487,17 +490,73 @@ namespace Lüscher_Color_Test
             }
             for (int i = 1; i < colorCounters.Length; i++)
             {
-                if (colorCounters[i] >= colorCounters[i - 1] && i != maxColorIndex1)
+                if (colorCounters[i] > colorCounters[i - 1] && i != maxColorIndex1)
                 {
                     maxColorIndex2 = i;
                 }
             }
 
 
-            string FAVOURITEcolor_1 = counterNames[maxColorIndex1];
-            string FAVOURITEcolor_2 = counterNames[maxColorIndex2];
-            string FAVOURITEtone = tonesNames[maxToneIndex];
-            MessageBox.Show(FAVOURITEcolor_1 + " " + FAVOURITEcolor_2 + " " + FAVOURITEtone);
+            FAVOURITEcolor_1 = counterNames[maxColorIndex1];
+            FAVOURITEcolor_2 = counterNames[maxColorIndex2];
+            FAVOURITEtone = tonesNames[maxToneIndex];
+
+            ShowResults();
+        }
+
+        private void ShowResults()
+        {
+            this.Controls.Clear();
+
+            Label ResultHeader = new Label();
+            ResultHeader.Size = new Size(720, 40);
+            ResultHeader.Location = new Point(240, 0);
+            ResultHeader.Text = "Тест пройден! Ознакомьтесь с результатом.";
+            ResultHeader.TextAlign = ContentAlignment.MiddleCenter;
+            ResultHeader.Font = new Font("Times New Roman", 20, FontStyle.Bold);
+            this.Controls.Add(ResultHeader);
+
+            Label ResultColor_1 = new Label();
+            ResultColor_1.Location = new Point(15, 90);
+            ResultColor_1.Size = new Size(1150, 180);
+            ResultColor_1.TextAlign = ContentAlignment.TopLeft;
+            ResultColor_1.Font = new Font("Times New Roman", 14, FontStyle.Italic);
+            ResultColor_1.BorderStyle = BorderStyle.FixedSingle;
+            ResultColor_1.Text = "";
+            this.Controls.Add(ResultColor_1);
+
+            Label ResultColor_2 = new Label();
+            ResultColor_2.Location = new Point(15, 310);
+            ResultColor_2.Size = new Size(1150, 180);
+            ResultColor_2.TextAlign = ContentAlignment.TopLeft;
+            ResultColor_2.Font = new Font("Times New Roman", 14, FontStyle.Italic);
+            ResultColor_2.BorderStyle = BorderStyle.FixedSingle;
+            ResultColor_2.Text = "";
+            this.Controls.Add(ResultColor_2);
+
+            StreamReader sr1 = new StreamReader("ResultsFiles\\" + FAVOURITEcolor_1 + "Result.txt");
+            string s1 = "";
+            while (!sr1.EndOfStream)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    s1 = sr1.ReadLine();
+                    ResultColor_1.Text += s1 + "\n\n";
+                }
+            }
+            sr1.Close();
+
+            StreamReader sr2 = new StreamReader("ResultsFiles\\" + FAVOURITEcolor_2 + "Result.txt");
+            string s2 = "";
+            while (!sr2.EndOfStream)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    s2 = sr2.ReadLine();
+                    ResultColor_2.Text += s2 + "\n\n";
+                }
+            }
+            sr2.Close();
         }
         
         public FormTest()
