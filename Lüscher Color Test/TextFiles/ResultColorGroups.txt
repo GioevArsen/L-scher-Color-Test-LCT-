@@ -3,7 +3,7 @@ DIM Black Gray Maroon Navy Purple Green Olive Teal
 0 Black Gray
 1 White Silver Gray
 2 Olive Teal
-3 Blue Navy Aqua
+3 Blue Navy
 4 Lime Green
 5 Red Maroon
 6 Fuchsia Purple

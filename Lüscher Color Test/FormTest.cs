@@ -19,12 +19,9 @@ namespace Lüscher_Color_Test
     public partial class FormTest : System.Windows.Forms.Form
     {
 
-        int Stage1Level = 1;
-        int Stage2Level = 1;
-        int Stage2CardsLeft = 8;
-
-        Label Stage1Header = new Label();
-        Label Stage2Header = new Label();
+        int Stage1Level = 1; // значение номера комбинации первого этапа по счету
+        int Stage2Level = 1; // значение номера комбинации второго этапа по счету
+        int Stage2CardsLeft = 8; // значение количества оставшихся невыбранных карточек на втором этапе
 
         Button ButtonCard1_1 = new Button();
         Button ButtonCard1_2 = new Button();
@@ -37,14 +34,6 @@ namespace Lüscher_Color_Test
         Button ButtonCard2_6 = new Button();
         Button ButtonCard2_7 = new Button();
         Button ButtonCard2_8 = new Button();
-
-        PictureBox loadingIMAGE = new PictureBox();
-
-        Label loadingTEXT = new Label();
-
-        Timer loadingTIMER = new Timer() { Enabled = true };
-
-        Random rnd = new Random();
 
         List<string> COLORS = new List<string>();
 
@@ -74,6 +63,10 @@ namespace Lüscher_Color_Test
 
         bool ClosedCorreclty = true;
 
+        string TextForDialogBox = " Тест завершен. После недолгой обработки Ваших ответов Вам будет представлен результат.\n" +
+                        "Если Вы где-то поспешили с выбором или случайно выбрали не ту карточку, " +
+                        "советуем Вам перепройти тест, так как это может влиять на конечный результат.\n\n" +
+                        "Вы уверены, что Вы готовы завершить тест?";
 
         /// <summary>
         /// //////////////////////////////////////////////////////////////////////////
@@ -148,7 +141,6 @@ namespace Lüscher_Color_Test
                 colors[i - 1] = words[i];
             }
 
-            //исправить этот позор!?
             ButtonCard2_1.BackColor = Color.FromName(colors[0]);
             ButtonCard2_2.BackColor = Color.FromName(colors[1]);
             ButtonCard2_3.BackColor = Color.FromName(colors[2]);
@@ -168,6 +160,7 @@ namespace Lüscher_Color_Test
             labelExplanations.Dispose();
             buttonStartLCT.Dispose();
 
+            Label Stage1Header = new Label();
             Stage1Header.Size = new Size(720, 40);
             Stage1Header.Location = new Point(240, 55);
             Stage1Header.Text = "Этап 1. Выберите наиболее привлекательный Вам цвет.";
@@ -193,6 +186,7 @@ namespace Lüscher_Color_Test
         {
             Size Stage2Size = new Size(100, 150);
 
+            Label Stage2Header = new Label();
             Stage2Header.Size = new Size(880, 40);
             Stage2Header.Location = new Point(160, 55);
             Stage2Header.Text = "Этап 2. По очереди выбирайте наиболее привлекательный Вам цвет.";
@@ -201,12 +195,12 @@ namespace Lüscher_Color_Test
 
             ButtonCard2_1.Size = Stage2Size;
             ButtonCard2_1.Location = new Point(60, 175);
-            ButtonCard2_1.Click += new EventHandler(AnyButton_Click);  //исправить, сократив эти 8 блоков во что-то поменьше!?
+            ButtonCard2_1.Click += new EventHandler(AnyButton_Click);  // 8 идентичных кнопок, отличающихся только позицией на форме
             this.Controls.Add(ButtonCard2_1);
 
             ButtonCard2_2.Size = Stage2Size;
             ButtonCard2_2.Location = new Point(197, 175);
-            ButtonCard2_2.Click += new EventHandler(AnyButton_Click);
+            ButtonCard2_2.Click += new EventHandler(AnyButton_Click);            //исправить, сократив эти 8 блоков во что-то поменьше!?
             this.Controls.Add(ButtonCard2_2);
 
             ButtonCard2_3.Size = Stage2Size;
@@ -264,6 +258,9 @@ namespace Lüscher_Color_Test
 
             this.BackColor = Color.White;
 
+            Random rnd = new Random();
+
+            Label loadingTEXT = new Label();
             loadingTEXT.Text = "Подготовка результатов";
             loadingTEXT.TextAlign = ContentAlignment.MiddleCenter;
             loadingTEXT.Size = new Size(250, 50);
@@ -271,12 +268,14 @@ namespace Lüscher_Color_Test
             loadingTEXT.Font = new Font("Times New Roman", 13, FontStyle.Bold);
             this.Controls.Add(loadingTEXT);
 
+            PictureBox loadingIMAGE = new PictureBox();
             loadingIMAGE.Location = new Point(550, 225);
             loadingIMAGE.Size = new Size(75, 75);
             loadingIMAGE.SizeMode = PictureBoxSizeMode.CenterImage;
             loadingIMAGE.Image = Lüscher_Color_Test.Properties.Resources.loadingIMAGE;
             this.Controls.Add(loadingIMAGE);
 
+            Timer loadingTIMER = new Timer() { Enabled = true };
             loadingTIMER.Interval = rnd.Next(3, 9) * 1000;
             loadingTIMER.Tick += new EventHandler(timer_tick);
         }
@@ -284,13 +283,6 @@ namespace Lüscher_Color_Test
         void timer_tick(object sender, EventArgs e)
         {
             (sender as Timer).Enabled = false;
-
-            StreamWriter fwr = new StreamWriter("TEST123");
-            for (int i = 0; i < COLORS.Count; i++)
-            {
-                fwr.Write(COLORS[i] + " ");
-            }
-            fwr.Close();
             ResultsStage();
         }
 
@@ -609,10 +601,7 @@ namespace Lüscher_Color_Test
                 }
                 else
                 {
-                    DialogResult EndTest = MessageBox.Show(" Тест завершен. После недолгой обработки Ваших ответов Вам будет представлен результат.\n" +
-                        "Если Вы где-то поспешили с выбором или случайно выбрали не ту карточку, " +
-                        "советуем Вам перепройти тест, так как это может влиять на конечный результат.\n\n" +
-                        "Вы уверены, что Вы готовы завершить тест?", "Тест завершен", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult EndTest = MessageBox.Show(TextForDialogBox, "Тест завершен", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (EndTest == DialogResult.Yes)
                     {
